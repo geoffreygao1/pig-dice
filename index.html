@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 
 <head>
   <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
   <link rel="stylesheet" href="css/styles.css" type="text/css">
   <script src="js/scripts.js"></script>
-  <title>Calculator</title>
+  <title>For Loops</title>
 </head>
 
 <body>
-  <h1>Calculator</h1>
+  <h1>Word Puzzle</h1>
+  <form id="form">
+    <div id="init">
+      <label for="input">Enter your sentence here:</label>
+      <input type="text" id="inputSentence">
+      <button type="button" id="convert">Convert to Code</button><br><br>
+    </div>
+    <div id="guess" class="hidden">
+      <h2>Your Code:</h2>
+      <textarea id="convertedText" cols="30" rows="10"></textarea> <br><br>
+      <label for="guess">Guess the sentence</label>
+      <input type="text" id="guessSentence"><br>
+      <button type="button" id="guess">Guess!</button><br><br>
+      <p id="result"></p>
+    </div>
+  </form>
 </body>
 
 </html>

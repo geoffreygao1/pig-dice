@@ -1,39 +1,60 @@
-// business logic
-function add(number1, number2) {
-  return number1 + number2;
+//Business Logic
+function hideVowel(text) {
+  let textArray = text.split('');
+  for (i = 0; i < textArray.length; i++) {
+    if (isVowel(textArray[i])) {
+      textArray[i] = "-";
+    } else {
+      //do nothing
+    }
+  }
+  return textArray.join('');
 }
 
-function subtract(number1, number2) {
-  return number1 - number2;
+function isVowel(letter) {
+  const vowels = ["a", "e", "i", "o", "u"];
+  if (vowels.includes(letter)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-function multiply(number1, number2) {
-  return number1 * number2;
+//UI Logic
+function convertHandler() {
+  //pull the text from our sentence input
+  const sentence = document.getElementById("inputSentence").value;
+  //run hideVowel
+  let convertedSentence = hideVowel(sentence);
+  //output it into our textArea
+  let output = document.getElementById("convertedText");
+  output.innerText = convertedSentence;
+  //hide the initial div
+  let initDiv = document.getElementById("init");
+  let guessDiv = document.getElementById("guess");
+
+  initDiv.classList.add("hidden");
+  guessDiv.classList.remove("hidden");
 }
 
-function divide(number1, number2) {
-  return number1 / number2;
+function guessHandler() {
+  //pull the text from our guess input
+  const guess = document.getElementById("guessSentence").value;
+  const sentence = document.getElementById("inputSentence").value;
+  const result = document.getElementById("result");
+  //compare it to the original sentence input
+  //output success or fail into p
+  if (guess === sentence) {
+    result.innerText = "Hooray! You guessed correctly";
+  } else {
+    result.innerText = "Wah wah! Try again";
+  }
 }
 
-// user interface logic 
-const number1 = parseInt(prompt("Enter a number:"));
-const number2 = parseInt(prompt("Enter another number:"));
-
-// window.alert("Your addition result is " + add(number1, number2));
-// window.alert("Your subtraction result is " + subtract(number1, number2));
-// window.alert("Your multiplication result is " + multiply(number1, number2));
-// window.alert("Your division result is " + divide(number1, number2));
-
-// const addMsg = "Your addition result is " + add(number1, number2) + ".";
-// const subtractMsg = "Your subtraction result is " + subtract(number1, number2) + ".";
-// const multiplyMsg = "Your multiplication result is " + multiply(number1, number2) + ".";
-// const divideMsg = "Your multiplication result is " + divide(number1, number2) + ".";
-
-// window.alert(addMsg + subtractMsg + multiplyMsg + divideMsg);
-
-const addMsg = number1 + " + " + number2 + " = " + add(number1, number2);
-const subMsg = number1 + " - " + number2 + " = " + subtract(number1, number2);
-const multMsg = number1 + " * " + number2 + " = " + multiply(number1, number2);
-const divMsg = number1 + " / " + number2 + " = " + divide(number1, number2);
-
-window.alert(addMsg + ", " + subMsg + ", " + multMsg + ", " + divMsg);
+window.addEventListener("load", function () {
+  const form = document.getElementById("form");
+  const convert = document.getElementById("convert");
+  const guess = document.getElementById("guess");
+  convert.addEventListener("click", convertHandler);
+  guess.addEventListener("click", guessHandler);
+})
