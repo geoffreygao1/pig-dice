@@ -35,3 +35,9 @@ Describe roboger(number)
 Test: "It should return an array of converted numbers (either numbers or converted strings) that count from 0 to the user input number"
 Code: roboger(14);
 Expected Output: [0, "Beep", "Boop!", "Won't you be my neighbor?", 4, 5, 6, 7, 8, 9, "Beep!", "Beep!", "Boop!", "Won't you be my neighbor?", "Beep!"]
+
+Describe reverseRoboger(number)
+
+Test: "It should return an array of converted numbers (either numbers or converted strings) that count from user input number down to 0"
+Code: roboger(5);
+Expected Output: [5, 4, "Won't you be my neighbor?", "Boop", "Beep"]
