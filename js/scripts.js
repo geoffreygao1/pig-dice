@@ -40,8 +40,14 @@ function roboger(number) {
 function generateHandler(event) {
   event.preventDefault();
   const input = document.getElementById("inputNum").value;
+  let outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = '';
   let outputArray = roboger(input);
-  console.log(outputArray);
+  outputArray.forEach(function (element) {
+    let itemDiv = document.createElement('p');
+    itemDiv.innerText = element;
+    outputDiv.append(itemDiv);
+  });
 }
 
 window.addEventListener("load", function () {
