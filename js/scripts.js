@@ -1,4 +1,6 @@
 //Business Logic
+
+//Returns an array with index values of 0 up to an input number
 function numCounter(number) {
   let numArray = [];
   for (let i = 0; i <= number; i++) {
@@ -7,6 +9,7 @@ function numCounter(number) {
   return numArray;
 }
 
+//Returns an array with index values of each digit of an input number
 function numSplit(number) {
   const numStringArray = number.toString().split('')
   const numSplitArray = numStringArray.map(function (element) {
@@ -15,6 +18,7 @@ function numSplit(number) {
   return numSplitArray;
 }
 
+//Returns a string or number based on whether a digit exists in an input number
 function numConvert(number) {
   let numSplitArray = numSplit(number);
   if (numSplitArray.includes(3)) {
@@ -28,6 +32,7 @@ function numConvert(number) {
   }
 }
 
+//Returns an array of converted numbers counting from 0 to the input number
 function roboger(number) {
   let counter = numCounter(number);
   let outputArray = counter.map(function (element) {
@@ -36,9 +41,17 @@ function roboger(number) {
   return outputArray;
 }
 
+//Returns an array of converted numbers counting from the input number to 0
+function reverseRoboger(number) {
+  let counter = numCounter(number).reverse();
+  let outputArray = counter.map(function (element) {
+    return numConvert(element);
+  })
+  return outputArray;
+}
+
 //UI Logic
-function generateHandler(event) {
-  event.preventDefault();
+function generateHandler() {
   const input = document.getElementById("inputNum").value;
   let outputDiv = document.getElementById("output");
   outputDiv.innerHTML = '';
@@ -49,8 +62,23 @@ function generateHandler(event) {
     outputDiv.append(itemDiv);
   });
 }
+function reverseHandler() {
+  const input = document.getElementById("inputNum").value;
+  let outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = '';
+  let outputArray = reverseRoboger(input);
+  outputArray.forEach(function (element) {
+    let itemDiv = document.createElement('p');
+    itemDiv.innerText = element;
+    outputDiv.append(itemDiv);
+  });
+}
 
 window.addEventListener("load", function () {
   const form = document.getElementById("input");
-  form.addEventListener("submit", generateHandler);
+  const generate = document.getElementById("generate");
+  const reverse = document.getElementById("reverse");
+
+  generate.addEventListener("click", generateHandler);
+  reverse.addEventListener("click", reverseHandler);
 })
