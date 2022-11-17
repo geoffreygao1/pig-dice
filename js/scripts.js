@@ -51,28 +51,48 @@ function reverseRoboger(number) {
 }
 
 //UI Logic
+function checkForms() {
+  const num = document.getElementById("inputNum").value;
+  const name = document.getElementById("inputName").value;
+  if (num && name) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function generateHandler() {
-  const input = document.getElementById("inputNum").value;
   let outputDiv = document.getElementById("output");
   outputDiv.innerHTML = '';
-  let outputArray = roboger(input);
-  outputArray.forEach(function (element) {
-    let itemDiv = document.createElement('p');
-    itemDiv.innerText = element;
-    outputDiv.append(itemDiv);
-  });
+  if (checkForms()) {
+    const input = document.getElementById("inputNum").value;
+    let outputArray = roboger(input);
+    outputArray.forEach(function (element) {
+      let itemDiv = document.createElement('p');
+      itemDiv.innerText = element;
+      outputDiv.append(itemDiv);
+    });
+  } else {
+    outputDiv.innerText = "Please make sure to fill in all fields"
+  }
 }
+
 function reverseHandler() {
-  const input = document.getElementById("inputNum").value;
   let outputDiv = document.getElementById("output");
   outputDiv.innerHTML = '';
-  let outputArray = reverseRoboger(input);
-  outputArray.forEach(function (element) {
-    let itemDiv = document.createElement('p');
-    itemDiv.innerText = element;
-    outputDiv.append(itemDiv);
-  });
+  if (checkForms()) {
+    const input = document.getElementById("inputNum").value;
+    let outputArray = reverseRoboger(input);
+    outputArray.forEach(function (element) {
+      let itemDiv = document.createElement('p');
+      itemDiv.innerText = element;
+      outputDiv.append(itemDiv);
+    });
+  } else {
+    outputDiv.innerText = "Please make sure to fill in all fields"
+  }
 }
+
 
 window.addEventListener("load", function () {
   const form = document.getElementById("input");
