@@ -5,3 +5,11 @@ function numCounter(number) {
   }
   return numArray;
 }
+
+function numSplit(number) {
+  const numStringArray = number.toString().split('')
+  const numSplitArray = numStringArray.map(function (element) {
+    return parseInt(element);
+  });
+  return numSplitArray;
+}
