@@ -65,12 +65,15 @@ function generateHandler() {
   let outputDiv = document.getElementById("output");
   outputDiv.innerHTML = '';
   if (checkForms()) {
+    let h2 = document.createElement('h3');
+    h2.innerText = "Mr. Roboger Says:";
+    outputDiv.append(h2);
     const num = document.getElementById("inputNum").value;
     const name = document.getElementById("inputName").value;
     let outputArray = roboger(num, name);
     outputArray.forEach(function (element) {
       let itemDiv = document.createElement('p');
-      itemDiv.innerText = element;
+      itemDiv.innerText = "> " + element;
       outputDiv.append(itemDiv);
     });
   } else {
@@ -84,10 +87,13 @@ function reverseHandler() {
   if (checkForms()) {
     const num = document.getElementById("inputNum").value;
     const name = document.getElementById("inputName").value;
+    let h2 = document.createElement('h3');
+    h2.innerText = "Mr. Roboger Says:";
+    outputDiv.append(h2);
     let outputArray = reverseRoboger(num, name);
     outputArray.forEach(function (element) {
       let itemDiv = document.createElement('p');
-      itemDiv.innerText = element;
+      itemDiv.innerText = "> " + element;
       outputDiv.append(itemDiv);
     });
   } else {
