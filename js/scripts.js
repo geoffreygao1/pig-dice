@@ -26,3 +26,11 @@ function numConvert(number) {
     return number;
   }
 }
+
+function roboger(number) {
+  let counter = numCounter(number);
+  let outputArray = counter.map(function (element) {
+    return numConvert(element);
+  })
+  return outputArray;
+}
