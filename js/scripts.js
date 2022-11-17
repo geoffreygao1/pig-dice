@@ -19,10 +19,10 @@ function numSplit(number) {
 }
 
 //Returns a string or number based on whether a digit exists in an input number
-function numConvert(number) {
+function numConvert(number, name) {
   let numSplitArray = numSplit(number);
   if (numSplitArray.includes(3)) {
-    return "Won't you be my neighbor?";
+    return "Won't you be my neighbor, " + name + "?";
   } else if (numSplitArray.includes(2)) {
     return "Boop!";
   } else if (numSplitArray.includes(1)) {
@@ -33,19 +33,19 @@ function numConvert(number) {
 }
 
 //Returns an array of converted numbers counting from 0 to the input number
-function roboger(number) {
+function roboger(number, name) {
   let counter = numCounter(number);
   let outputArray = counter.map(function (element) {
-    return numConvert(element);
+    return numConvert(element, name);
   })
   return outputArray;
 }
 
 //Returns an array of converted numbers counting from the input number to 0
-function reverseRoboger(number) {
+function reverseRoboger(number, name) {
   let counter = numCounter(number).reverse();
   let outputArray = counter.map(function (element) {
-    return numConvert(element);
+    return numConvert(element, name);
   })
   return outputArray;
 }
@@ -65,8 +65,9 @@ function generateHandler() {
   let outputDiv = document.getElementById("output");
   outputDiv.innerHTML = '';
   if (checkForms()) {
-    const input = document.getElementById("inputNum").value;
-    let outputArray = roboger(input);
+    const num = document.getElementById("inputNum").value;
+    const name = document.getElementById("inputName").value;
+    let outputArray = roboger(num, name);
     outputArray.forEach(function (element) {
       let itemDiv = document.createElement('p');
       itemDiv.innerText = element;
@@ -81,8 +82,9 @@ function reverseHandler() {
   let outputDiv = document.getElementById("output");
   outputDiv.innerHTML = '';
   if (checkForms()) {
-    const input = document.getElementById("inputNum").value;
-    let outputArray = reverseRoboger(input);
+    const num = document.getElementById("inputNum").value;
+    const name = document.getElementById("inputName").value;
+    let outputArray = reverseRoboger(num, name);
     outputArray.forEach(function (element) {
       let itemDiv = document.createElement('p');
       itemDiv.innerText = element;
