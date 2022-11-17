@@ -1,3 +1,4 @@
+//Business Logic
 function numCounter(number) {
   let numArray = [];
   for (let i = 0; i <= number; i++) {
@@ -34,3 +35,16 @@ function roboger(number) {
   })
   return outputArray;
 }
+
+//UI Logic
+function generateHandler(event) {
+  event.preventDefault();
+  const input = document.getElementById("inputNum").value;
+  let outputArray = roboger(input);
+  console.log(outputArray);
+}
+
+window.addEventListener("load", function () {
+  const form = document.getElementById("input");
+  form.addEventListener("submit", generateHandler);
+})
