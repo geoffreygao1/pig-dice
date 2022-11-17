@@ -1,60 +1,66 @@
-//Business Logic
-function hideVowel(text) {
-  let textArray = text.split('');
-  for (i = 0; i < textArray.length; i++) {
-    if (isVowel(textArray[i])) {
-      textArray[i] = "-";
-    } else {
-      //do nothing
+function pigLatin(word) {
+  let firstLetter = word.charAt(0);
+  if (letterType(firstLetter) === "vowel") {
+    let temp = "";
+    temp = word + "way";
+    return temp;
+  } else if (letterType(firstLetter) === "q") {
+    let temp = "";
+    temp = word.slice(2) + word.slice(0, 2) + "ay";
+    return temp;
+  } else if (letterType(firstLetter) === "consonant") {
+    let constCounter = 0;
+    for (i = 0; i < word.length; i++) {
+      if (letterType(word.charAt(i)) === "consonant") {
+      } else {
+        constCounter = i;
+        break;
+      }
     }
+    let temp = "";
+    temp = word.slice(constCounter) + word.slice(0, constCounter) + "ay";
+    return temp;
   }
-  return textArray.join('');
 }
 
-function isVowel(letter) {
+function letterType(letter) {
   const vowels = ["a", "e", "i", "o", "u"];
   if (vowels.includes(letter)) {
-    return true;
+    return "vowel";
+  } else if (letter.toLowerCase() === "q") {
+    return "q";
   } else {
-    return false;
+    return "consonant";
   }
+}
+
+function convertSentence(text) {
+  let textArray = text.split(" ");
+  let convArray = [];
+  textArray.forEach(function (element) {
+    let temp = "";
+    temp = pigLatin(element.toLowerCase());
+    convArray.push(temp);
+  });
+  let result = convArray.join(' ');
+  return result;
 }
 
 //UI Logic
 function convertHandler() {
-  //pull the text from our sentence input
   const sentence = document.getElementById("inputSentence").value;
-  //run hideVowel
-  let convertedSentence = hideVowel(sentence);
-  //output it into our textArea
-  let output = document.getElementById("convertedText");
-  output.innerText = convertedSentence;
-  //hide the initial div
+  let convertedSentence = convertSentence(sentence);
+
+  result.innerText = convertedSentence;
+
   let initDiv = document.getElementById("init");
   let guessDiv = document.getElementById("guess");
-
   initDiv.classList.add("hidden");
   guessDiv.classList.remove("hidden");
-}
-
-function guessHandler() {
-  //pull the text from our guess input
-  const guess = document.getElementById("guessSentence").value;
-  const sentence = document.getElementById("inputSentence").value;
-  const result = document.getElementById("result");
-  //compare it to the original sentence input
-  //output success or fail into p
-  if (guess === sentence) {
-    result.innerText = "Hooray! You guessed correctly";
-  } else {
-    result.innerText = "Wah wah! Try again";
-  }
 }
 
 window.addEventListener("load", function () {
   const form = document.getElementById("form");
   const convert = document.getElementById("convert");
-  const guess = document.getElementById("guess");
   convert.addEventListener("click", convertHandler);
-  guess.addEventListener("click", guessHandler);
 })
