@@ -1,42 +1,27 @@
-//Business logic for addressbook
-function AddressBook() {
-  this.contacts = {};
-  this.currentId = 0;
-}
-
-AddressBook.prototype.assignId = function () {
-  this.currentId += 1;
-  return this.currentId;
-};
-
-AddressBook.prototype.addContact = function (contact) {
-  contact.id = this.assignId();
-  this.contacts[contact.id] = contact;
-};
-
-AddressBook.prototype.findContact = function (id) {
-  if (this.contacts[id] !== undefined) {
-    return this.contacts[id];
-  }
-  return false;
-};
-
-AddressBook.prototype.deleteContact = function (id) {
-  if (this.contacts[id] === undefined) {
-    return false;
-  }
-  delete this.contacts[id];
-  return true;
-};
-
-//business logic for contacts
-function Contact(firstName, lastName, phoneNumber) {
-  this.firstName = FirstName;
-  this.lastName = lastName;
-  this.phoneNumber = phoneNumber;
+// Business Logic for Tasks
+function Task(name, description, priority, dueDate, isDone) {
+  this.name = name;
+  this.description = description;
+  this.priority = priority;
+  this.dueDate = dueDate;
+  this.isDone = isDone;
 }
 
 
-Contact.prototype.fullName = function () {
-  return this.firstName + " " + this.lastName;
-};
+// Business Logic for ToDoLists
+function ToDoList() {
+  this.tasks = [];
+}
+
+ToDoList.prototype.addTask = function (task) {
+  this.tasks.push(task);
+}
+
+ToDoList.prototype.removeTask = function (index) {
+  this.tasks.splice(index, 1);
+  // Add functionality to return removed task
+}
+
+ToDoList.prototype.finishTask = function (index) {
+  this.tasks[index].isDone = true;
+}
