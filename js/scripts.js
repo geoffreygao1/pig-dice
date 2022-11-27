@@ -8,7 +8,7 @@ function Task(name, description, priority, dueDate) {
 }
 
 Task.prototype.toString = function () {
-  return `${this.name}: ${this.description}, ${this.dueDate.toLocaleDateString()}`;
+  return `${this.name}: ${this.description}, ${this.dueDate.toLocaleDateString()} Priority: ${this.priority}`;
 }
 
 
@@ -120,10 +120,23 @@ function toggleTaskHandler(list, index) {
   updateList(list);
 }
 
+function sortHandler(list) {
+  event.preventDefault();
+  const sortBy = document.getElementById("sortBy").value;
+  console.log(sortBy);
+  list.sortTasks(sortBy);
+  console.log(list.tasks)
+  updateList(list);
+}
+
 window.onload = function () {
   const toDoList = new ToDoList();
   const addForm = document.getElementById("taskInput");
+  const sortForm = document.getElementById("sortForm");
   addForm.addEventListener("submit", function () {
     addTaskHandler(toDoList);
+  });
+  sortForm.addEventListener("submit", function () {
+    sortHandler(toDoList);
   });
 }
