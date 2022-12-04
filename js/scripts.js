@@ -3,7 +3,6 @@
 function Player() {
   this.playerName = '';
   this.score = 0;
-  // this.turn = new Turn();
 }
 
 Player.prototype.addName = function (inputName) {
@@ -12,10 +11,11 @@ Player.prototype.addName = function (inputName) {
 
 
 function Game() {
-  // this.numOfDice = 0;
+  this.numOfDice = 0;
   this.playerList = [];
   this.currentTurn = 0;
   this.scoreCounter = 0;
+  this.rollCounter = 0;
 }
 
 Game.prototype.addPlayer = function (player) {
@@ -70,3 +70,45 @@ Game.prototype.checkWin = function () {
   }
 }
 
+// UI Logic
+function startGame() {
+  //initialize game and add players
+  let newGame = new Game();
+  let playerOne = new Player();
+  let playerTwo = new Player();
+  newGame.addPlayer(playerOne);
+  newGame.addPlayer(playerTwo);
+
+  //Populates Player Scorecards
+  playerOne.playerName = document.getElementById("playerOne").value;
+  document.getElementById('playerOneScore').innerText = playerOne.playerName + "'s score";
+  playerTwo.playerName = document.getElementById("playerTwo").value;
+  document.getElementById('playerTwoScore').innerText = playerTwo.playerName + "'s score";
+
+  //Sets random order
+  newGame.currentTurn = Math.floor(Math.random() * 2);
+
+  //Roll and Hold Button Handlers
+  const rollButton = document.getElementById("roll")
+  const holdButton = document.getElementById("hold")
+  rollButton.addEventListener('click', function () {
+    newGame.roll();
+  });
+  holdButton.addEventListener('click', function () {
+    newGame.hold();
+  })
+}
+
+window.addEventListener('load', function () {
+  document.getElementById('start').addEventListener('click', function () {
+    startGame();
+  });
+});
+
+
+//Test code
+// let testPlayer = new Player();
+// let testPlayer2 = new Player();
+// let testGame = new Game();
+// testGame.addPlayer(testPlayer);
+// testGame.addPlayer(testPlayer2);
