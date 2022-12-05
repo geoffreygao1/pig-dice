@@ -33,10 +33,10 @@ Game.prototype.hold = function () {
   let scoreCounter = this.scoreCounter;
   currentPlayer.score += scoreCounter;
   this.scoreCounter = 0;
-  console.log('Player ' + this.currentTurn + ' Score: ' + currentPlayer.score);
   this.endTurn();
-  console.log('Current Turn: ' + this.currentTurn);
-  this.checkWin();
+  if (this.checkWin()) {
+    return true;
+  };
 }
 
 Game.prototype.roll = function () {
@@ -44,13 +44,11 @@ Game.prototype.roll = function () {
   let rollValue = this.rollDice();
   if (rollValue !== 1) {
     this.scoreCounter += rollValue;
-    console.log('Player ' + this.currentTurn + ' Rolled a: ' + rollValue);
   } else {
     this.scoreCounter = 0;
-    console.log('Player ' + this.currentTurn + ' Rolled a 1. Their turn is over')
     this.endTurn();
-    console.log('Current Turn: ' + this.currentTurn);
   }
+  return rollValue;
 }
 
 Game.prototype.endTurn = function () {
@@ -64,13 +62,24 @@ Game.prototype.endTurn = function () {
 Game.prototype.checkWin = function () {
   for (let i = 0; i < this.playerList.length; i++) {
     if (this.playerList[i].score >= 10) {
-      console.log("Player " + i + " has won. Their score is: " + this.playerList[i].score);
+      return true;
       break;
     }
   }
 }
 
 // UI Logic
+function updateFields(game) {
+  let currentPlayerName = document.getElementById('currentPlayerName');
+  currentPlayerName.innerText = 'Player Name: ' + game.playerList[game.currentTurn].playerName;
+  let currentRollCounter = document.getElementById('currentRollCounter');
+  currentRollCounter.innerText = 'Current Roll Streak Counter: ' + game.scoreCounter;
+  let playerOneScore = document.getElementById('playerOneScore');
+  playerOneScore.innerText = game.playerList[0].score;
+  let playerTwoScore = document.getElementById('playerTwoScore');
+  playerTwoScore.innerText = game.playerList[1].score;
+}
+
 function startGame() {
   //initialize game and add players
   let newGame = new Game();
@@ -79,23 +88,41 @@ function startGame() {
   newGame.addPlayer(playerOne);
   newGame.addPlayer(playerTwo);
 
-  //Populates Player Scorecards
-  playerOne.playerName = document.getElementById("playerOne").value;
-  document.getElementById('playerOneScore').innerText = playerOne.playerName + "'s score";
-  playerTwo.playerName = document.getElementById("playerTwo").value;
-  document.getElementById('playerTwoScore').innerText = playerTwo.playerName + "'s score";
-
   //Sets random order
   newGame.currentTurn = Math.floor(Math.random() * 2);
+
+  //Populates Player Scorecards
+  playerOne.playerName = document.getElementById("playerOne").value;
+  document.getElementById('playerOneTitle').innerText = playerOne.playerName + "'s score";
+  playerTwo.playerName = document.getElementById("playerTwo").value;
+  document.getElementById('playerTwoTitle').innerText = playerTwo.playerName + "'s score";
+  updateFields(newGame);
 
   //Roll and Hold Button Handlers
   const rollButton = document.getElementById("roll")
   const holdButton = document.getElementById("hold")
   rollButton.addEventListener('click', function () {
-    newGame.roll();
+    let newRoll = newGame.roll();
+    if (newRoll > 1) {
+      document.getElementById('rollMessage').innerText = "You rolled a " + newRoll;
+    } else {
+      document.getElementById('rollMessage').innerText = "You rolled a 1, next player's turn!";
+    }
+    updateFields(newGame);
   });
   holdButton.addEventListener('click', function () {
-    newGame.hold();
+    let gameResult = newGame.hold();
+    if (gameResult) {
+      for (let i = 0; i < newGame.playerList.length; i++) {
+        if (newGame.playerList[i].score >= 100) {
+          document.getElementById('rollMessage').innerText = 'Player ' + (i + 1) + ' has won. They have a score of ' + newGame.playerList[i].score;
+        } else {
+        }
+      }
+    } else {
+      document.getElementById('rollMessage').innerText = "The player has decided to hold. Next Player's turn!";
+    }
+    updateFields(newGame);
   })
 }
 
